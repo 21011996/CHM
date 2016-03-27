@@ -3,7 +3,7 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
-        new Main().run(new File("badMatrix.in"));
+        new Main().run(new File("goodMatrix.in"));
     }
 
     void run(File file) {

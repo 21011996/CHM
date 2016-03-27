@@ -12,7 +12,7 @@ public class IterationJacobi {
     private Scanner in;
 
     public static void main(String[] args) {
-        new IterationJacobi().run(new File("matrix1.in"));
+        new IterationJacobi().run(new File("matrix.in"));
     }
 
     public void run(File file) {
