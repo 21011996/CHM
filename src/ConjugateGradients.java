@@ -1,18 +1,20 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by dasha on 3/27/16.
  */
 
 public class ConjugateGradients {
+    final double EPS = 1e-15;
+    Scanner in;
+
     public static void main(String[] args) {
         new ConjugateGradients().run();
     }
-
-    Scanner in;
-    double EPS = 1e-15;
 
     public void run() {
         try {
