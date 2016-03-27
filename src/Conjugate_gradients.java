@@ -1,9 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by dasha on 3/27/16.
@@ -16,7 +14,7 @@ public class Conjugate_gradients {
 
     Scanner in;
     PrintWriter out;
-    double EPS = 1e-10;
+    double EPS = 1e-15;
 
     public void run() {
         try {
@@ -36,31 +34,39 @@ public class Conjugate_gradients {
                 matrix[i][j] = in.nextDouble();
             }
         }
+        double[][] transposeM = transpose(matrix);
+        matrix = mulMatrices(transposeM, matrix);
 
         double[] b = new double[n];
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
+        }
+        b = mul(transposeM, b);
+
+        for (int i = 0; i < n; i++) {
+            System.out.println(Arrays.toString(matrix[i]));
         }
 
         double[] x = new double[n];
         for (int i = 0; i < n; i++) {
             x[i] = (new Random()).nextDouble();
         }
-
-        double[] dir = sub(b, mul(matrix, x));
+        double[] dir = getToNorm(sub(b, mul(matrix, x)));
         double alpha = -scalarMulVecVec(negate(dir), dir) / scalarMulVecVec(mul(matrix, dir), dir);
 
-        double normB = scalarMulVecVec(b, b);
+        double normB = norm(b);
         int iter = 0;
-        while (Math.sqrt(scalarMulVecVec(dir, dir) / normB) > EPS) {
+        while (alpha > EPS) {
             System.out.println(iter + ": " + Arrays.toString(x));
+            System.out.println(Arrays.toString(dir) + "\n" + alpha);
+
             x = sum(x, scalarMulVecSc(alpha, dir));
             double[] grad = sub(mul(matrix, x), b);
 
             double beta = scalarMulVecVec(mul(matrix, dir), grad) / scalarMulVecVec(mul(matrix, dir), dir);
 
-            dir = sub(scalarMulVecSc(beta, dir), grad);
-            alpha = - scalarMulVecVec(grad, dir) / scalarMulVecVec(mul(matrix, dir), dir);
+            dir = getToNorm(sub(scalarMulVecSc(beta, dir), grad));
+            alpha = -scalarMulVecVec(grad, dir) / scalarMulVecVec(mul(matrix, dir), dir);
             iter++;
         }
 
@@ -113,5 +119,41 @@ public class Conjugate_gradients {
 
     double[] sum(double[] vec1, double[] vec2) {
         return sub(vec1, negate(vec2));
+    }
+
+    double norm(double[] vec) {
+        return Math.sqrt(scalarMulVecVec(vec, vec));
+    }
+
+    double[] getToNorm(double[] vec) {
+        double[] res = scalarMulVecSc(1 / norm(vec), vec);
+        return res;
+    }
+
+
+    double[][] transpose(double[][] matrix) {
+        int n = matrix.length;
+        double[][] res = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                res[i][j] = matrix[j][i];
+            }
+        }
+        return res;
+    }
+
+    double[][] mulMatrices(double[][] matrix1, double[][] matrix2) {
+        int n = matrix1.length;
+        double[][] res = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                double[] aux = new double[n];
+                for (int k = 0; k < n; k++) {
+                    aux[k] = matrix2[k][j];
+                }
+                res[i][j] = scalarMulVecVec(matrix1[i], aux);
+            }
+        }
+        return res;
     }
 }
