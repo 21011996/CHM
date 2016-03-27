@@ -37,8 +37,6 @@ public class IterationJacobi {
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
         }
-        b = CommonMethods.adjustFree(matrix, b);
-        matrix = CommonMethods.symmetrizeMatrix(matrix);
 
         double[] x = new double[n];
         for (int i = 0; i < n; i++) {
@@ -54,11 +52,12 @@ public class IterationJacobi {
         for (int i = 0; i < n; i++) {
             bB[i] = b[i] / matrix[i][i];
             for (int j = 0; j < n; j++) {
-                if (i != j) {
-                    matrixB[i][j] = -matrix[i][j] / matrix[i][i];
-                }
+                matrixB[i][j] = -matrix[i][j] / matrix[i][i];
+
             }
+            matrixB[i][i] = 0;
         }
+
         System.out.println(CommonMethods.matrixNormEuclidean(matrixB));
         do {
             System.out.println(iter + ": " + Arrays.toString(x));
@@ -67,15 +66,7 @@ public class IterationJacobi {
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), bB);
 
             norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
-
-
-            /*for (int i = 0; i < n; i++) {
-                if (Math.abs(x[i] - tempX[i]) > norm)
-                    norm = Math.abs(x[i] - tempX[i]);
-                x[i] = tempX[i];
-            }*/
             x = tempX;
-
         } while (norm > EPS);
 
     }
