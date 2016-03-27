@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
@@ -25,6 +27,7 @@ public class ConjugateGradients {
     }
 
     public void solve() {
+        System.out.println("Conjugate gradient method:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -37,13 +40,8 @@ public class ConjugateGradients {
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
         }
-
         b = CommonMethods.adjustFree(matrix, b);
         matrix = CommonMethods.symmetrizeMatrix(matrix);
-
-        for (int i = 0; i < n; i++) {
-            System.out.println(Arrays.toString(matrix[i]));
-        }
 
         double[] x = new double[n];
         for (int i = 0; i < n; i++) {
@@ -54,9 +52,6 @@ public class ConjugateGradients {
 
         int iter = 0;
         while (alpha > EPS) {
-            System.out.println(iter + ": " + Arrays.toString(x));
-            System.out.println(Arrays.toString(dir) + "\n" + alpha);
-
             x = CommonMethods.sum(x, CommonMethods.scalarMulVecSc(alpha, dir));
             double[] grad = CommonMethods.sub(CommonMethods.mul(matrix, x), b);
 
@@ -67,6 +62,6 @@ public class ConjugateGradients {
             iter++;
         }
 
-        System.out.println(iter + ": " + Arrays.toString(x) + " <- ans");
+        System.out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
     }
 }

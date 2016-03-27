@@ -15,7 +15,7 @@ public class IterationJacobi {
         new IterationJacobi().run();
     }
 
-    private void run() {
+    public void run() {
         try {
             in = new Scanner(new FileInputStream(new File("matrix" + ".in")));
             solve();
@@ -25,6 +25,7 @@ public class IterationJacobi {
     }
 
     private void solve() {
+        System.out.println("Jacobi's method of simple iterations:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -58,11 +59,10 @@ public class IterationJacobi {
         }
 
         if (CommonMethods.matrixNormEuclidean(matrixB) > 1) {
-            System.out.println("||B|| > 1. Jacobi's Method won't converge.");
+            System.out.println("||B|| > 1. Jacobi's Method won't converge.\n");
             return;
         }
         do {
-            System.out.println(iter + ": " + Arrays.toString(x));
             iter++;
 
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), bB);
@@ -71,5 +71,6 @@ public class IterationJacobi {
             x = tempX;
         } while (norm > EPS);
 
+        System.out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
     }
 }
