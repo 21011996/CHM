@@ -16,7 +16,7 @@ public class IterationJacobi {
 
     private void run() {
         try {
-            in = new Scanner(new FileInputStream(new File("matrix" + ".in")));
+            in = new Scanner(new FileInputStream(new File("matrix1" + ".in")));
             solve();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -37,8 +37,6 @@ public class IterationJacobi {
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
         }
-        b = CommonMethods.adjustFree(matrix, b);
-        matrix = CommonMethods.symmetrizeMatrix(matrix);
 
         double[] x = new double[n];
         for (int i = 0; i < n; i++) {
@@ -59,24 +57,21 @@ public class IterationJacobi {
                 }
             }
         }
-        System.out.println(CommonMethods.matrixNormEuclidean(matrixB));
-        do {
-            System.out.println(iter + ": " + Arrays.toString(x));
-            iter++;
 
-            tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), bB);
+        if (CommonMethods.matrixNormEuclidean(matrixB) < 1) {
+            do {
+                System.out.println(iter + ": " + Arrays.toString(x));
+                iter++;
 
-            norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
+                tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), bB);
 
+                norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
 
-            /*for (int i = 0; i < n; i++) {
-                if (Math.abs(x[i] - tempX[i]) > norm)
-                    norm = Math.abs(x[i] - tempX[i]);
-                x[i] = tempX[i];
-            }*/
-            x = tempX;
+                x = tempX;
 
-        } while (norm > EPS);
-
+            } while (norm > EPS);
+        } else {
+            System.out.println("||B|| = " + CommonMethods.matrixNormEuclidean(matrixB) + " > 1");
+        }
     }
 }
