@@ -65,6 +65,7 @@ public class IterationJacobi {
             return;
         }
         do {
+            System.out.println(iter + ": " + Arrays.toString(x));
             iter++;
 
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), c);

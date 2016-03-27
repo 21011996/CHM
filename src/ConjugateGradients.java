@@ -51,6 +51,7 @@ public class ConjugateGradients {
         double alpha = -CommonMethods.scalarMulVecVec(CommonMethods.negate(dir), dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
 
         int iter = 0;
+        System.out.println(iter + ": " + Arrays.toString(x));
         while (alpha > EPS) {
             x = CommonMethods.sum(x, CommonMethods.scalarMulVecSc(alpha, dir));
             double[] grad = CommonMethods.sub(CommonMethods.mul(matrix, x), b);
@@ -60,6 +61,7 @@ public class ConjugateGradients {
             dir = CommonMethods.normalizeVector(CommonMethods.sub(CommonMethods.scalarMulVecSc(beta, dir), grad));
             alpha = -CommonMethods.scalarMulVecVec(grad, dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
             iter++;
+            System.out.println(iter + ": " + Arrays.toString(x));
         }
 
         System.out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
