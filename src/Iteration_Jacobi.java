@@ -34,14 +34,13 @@ public class Iteration_Jacobi {
                 matrix[i][j] = in.nextDouble();
             }
         }
-
-        double[][] transposeM = Common_methods.transpose(matrix);
-        matrix = Common_methods.mulMatrices(transposeM, matrix);
         double[] b = new double[n];
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
         }
-        b = Common_methods.mul(transposeM, b);
+        b = Common_methods.adjustFree(matrix, b);
+        matrix = Common_methods.symmetrizeMatrix(matrix);
+
         double[] x = new double[n];
         for (int i = 0; i < n; i++) {
             x[i] = (new Random()).nextDouble();
