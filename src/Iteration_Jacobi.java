@@ -46,31 +46,34 @@ public class Iteration_Jacobi {
             x[i] = (new Random()).nextDouble();
         }
 
-        double[] tempX = new double[n];
+        double[] tempX;
         double norm;
 
         int iter = 0;
+        double[][] matrixB = new double[n][n];
+        double[] bB = new double[n];
+        for (int i = 0; i < n; i++) {
+            bB[i] = b[i] / matrix[i][i];
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    matrixB[i][j] = -matrix[i][j] / matrix[i][i];
+                }
+            }
+        }
         do {
             System.out.println(iter + ": " + Arrays.toString(x));
             iter++;
-            double[][] matrix_iter = new double[n][n];
-            for (int i = 0; i < n; i++) {
-                tempX[i] = b[i] / matrix[i][i];
-                for (int j = 0; j < n; j++) {
-                    if (i != j) {
-                        matrix_iter[i][j] = matrix[i][j] * x[j] / matrix[i][i];
-                        tempX[i] -= matrix[i][j] * x[j] / matrix[i][i];
-                    }
-                }
-            }
 
-            norm = Math.abs(x[0] - tempX[0]);
+            tempX = Common_methods.sum(Common_methods.mul(matrixB, x), bB);
 
-            for (int i = 0; i < n; i++) {
+            norm = Common_methods.vectorNorm(Common_methods.sub(x, tempX));
+
+            /*for (int i = 0; i < n; i++) {
                 if (Math.abs(x[i] - tempX[i]) > norm)
                     norm = Math.abs(x[i] - tempX[i]);
                 x[i] = tempX[i];
-            }
+            }*/
+            x = tempX;
 
         } while (norm > EPS);
 
