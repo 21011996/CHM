@@ -17,7 +17,7 @@ public class IterationJacobi {
 
     public void run() {
         try {
-            in = new Scanner(new FileInputStream(new File("matrix" + ".in")));
+            in = new Scanner(new FileInputStream(new File("matrix1" + ".in")));
             solve();
         } catch (Exception e) {
             System.out.println(e.getMessage());
