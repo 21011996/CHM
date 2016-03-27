@@ -2,7 +2,8 @@
  * Created by dasha on 3/27/16.
  */
 public class CommonMethods {
-    public static double[][] calculateB(double[][] matrix, int n) {
+    public static double[][] calculateB(double[][] matrix) {
+        int n = matrix.length;
         double[][] matrixB = new double[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -13,7 +14,8 @@ public class CommonMethods {
         return matrixB;
     }
 
-    public static double[] calculateC(double[][] matrix, double[] b, int n) {
+    public static double[] calculateC(double[][] matrix, double[] b) {
+        int n = b.length;
         double[] c = new double[n];
         for (int i = 0; i < n; i++) {
             c[i] = b[i] / matrix[i][i];

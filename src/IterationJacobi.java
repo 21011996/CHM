@@ -47,8 +47,8 @@ public class IterationJacobi {
         double norm;
 
         int iter = 0;
-        double[][] matrixB = CommonMethods.calculateB(matrix, n);
-        double[] c = CommonMethods.calculateC(matrix, b, n);
+        double[][] matrixB = CommonMethods.calculateB(matrix);
+        double[] c = CommonMethods.calculateC(matrix, b);
 
         if (CommonMethods.matrixNormEuclidean(matrixB) > 1) {
             System.out.println("||B|| > 1. Jacobi's Method won't converge.\n");
