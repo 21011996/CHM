@@ -2,6 +2,25 @@
  * Created by dasha on 3/27/16.
  */
 public class CommonMethods {
+    public static double[][] calculateB(double[][] matrix, int n) {
+        double[][] matrixB = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrixB[i][j] = -matrix[i][j] / matrix[i][i];
+            }
+            matrixB[i][i] = 0;
+        }
+        return matrixB;
+    }
+
+    public static double[] calculateC(double[][] matrix, double[] b, int n) {
+        double[] c = new double[n];
+        for (int i = 0; i < n; i++) {
+            c[i] = b[i] / matrix[i][i];
+        }
+        return c;
+    }
+
     public static double[] negate(double[] vec) {
         double[] res = new double[vec.length];
         for (int i = 0; i < vec.length; i++) {

@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -49,16 +47,8 @@ public class IterationJacobi {
         double norm;
 
         int iter = 0;
-        double[][] matrixB = new double[n][n];
-        double[] c = new double[n];
-        for (int i = 0; i < n; i++) {
-            c[i] = b[i] / matrix[i][i];
-            for (int j = 0; j < n; j++) {
-                matrixB[i][j] = -matrix[i][j] / matrix[i][i];
-
-            }
-            matrixB[i][i] = 0;
-        }
+        double[][] matrixB = CommonMethods.calculateB(matrix, n);
+        double[] c = CommonMethods.calculateC(matrix, b, n);
 
         if (CommonMethods.matrixNormEuclidean(matrixB) > 1) {
             System.out.println("||B|| > 1. Jacobi's Method won't converge.\n");
