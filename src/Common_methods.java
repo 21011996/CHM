@@ -50,12 +50,12 @@ public class Common_methods {
         return sub(vec1, negate(vec2));
     }
 
-    public static double norm(double[] vec) {
+    public static double vectorNorm(double[] vec) {
         return Math.sqrt(scalarMulVecVec(vec, vec));
     }
 
-    public static double[] getToNorm(double[] vec) {
-        return scalarMulVecSc(1 / norm(vec), vec);
+    public static double[] normalizeVector(double[] vec) {
+        return scalarMulVecSc(1 / vectorNorm(vec), vec);
     }
 
 
@@ -69,6 +69,15 @@ public class Common_methods {
         }
         return res;
     }
+
+    public static double[][] symmetrizeMatrix(double[][] matrix) {
+        return mulMatrices(transpose(matrix), matrix);
+    }
+
+    public static double[] adjustFree(double[][] matrix, double[] vec) {
+        return mul(transpose(matrix), vec);
+    }
+
 
     public static double[][] mulMatrices(double[][] matrix1, double[][] matrix2) {
         int n = matrix1.length;

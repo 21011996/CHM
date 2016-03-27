@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -31,14 +30,14 @@ public class Conjugate_gradients {
                 matrix[i][j] = in.nextDouble();
             }
         }
-        double[][] transposeM = Common_methods.transpose(matrix);
-        matrix = Common_methods.mulMatrices(transposeM, matrix);
 
         double[] b = new double[n];
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
         }
-        b = Common_methods.mul(transposeM, b);
+
+        b = Common_methods.adjustFree(matrix, b);
+        matrix = Common_methods.symmetrizeMatrix(matrix);
 
         for (int i = 0; i < n; i++) {
             System.out.println(Arrays.toString(matrix[i]));
@@ -48,7 +47,7 @@ public class Conjugate_gradients {
         for (int i = 0; i < n; i++) {
             x[i] = (new Random()).nextDouble();
         }
-        double[] dir = Common_methods.getToNorm(Common_methods.sub(b, Common_methods.mul(matrix, x)));
+        double[] dir = Common_methods.normalizeVector(Common_methods.sub(b, Common_methods.mul(matrix, x)));
         double alpha = -Common_methods.scalarMulVecVec(Common_methods.negate(dir), dir) / Common_methods.scalarMulVecVec(Common_methods.mul(matrix, dir), dir);
 
         int iter = 0;
@@ -61,7 +60,7 @@ public class Conjugate_gradients {
 
             double beta = Common_methods.scalarMulVecVec(Common_methods.mul(matrix, dir), grad) / Common_methods.scalarMulVecVec(Common_methods.mul(matrix, dir), dir);
 
-            dir = Common_methods.getToNorm(Common_methods.sub(Common_methods.scalarMulVecSc(beta, dir), grad));
+            dir = Common_methods.normalizeVector(Common_methods.sub(Common_methods.scalarMulVecSc(beta, dir), grad));
             alpha = -Common_methods.scalarMulVecVec(grad, dir) / Common_methods.scalarMulVecVec(Common_methods.mul(matrix, dir), dir);
             iter++;
         }
