@@ -59,6 +59,7 @@ public class IterationJacobi {
                 }
             }
         }
+        System.out.println(CommonMethods.matrixNormEuclidean(matrixB));
         do {
             System.out.println(iter + ": " + Arrays.toString(x));
             iter++;
@@ -66,6 +67,7 @@ public class IterationJacobi {
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), bB);
 
             norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
+
 
             /*for (int i = 0; i < n; i++) {
                 if (Math.abs(x[i] - tempX[i]) > norm)
