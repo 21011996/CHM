@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -13,14 +14,11 @@ public class Iteration_Jacobi {
     }
 
     private Scanner in;
-    private PrintWriter out;
 
     private void run() {
         try {
-            in = new Scanner(new FileInputStream(new File("matrix1" + ".in")));
-            out = new PrintWriter(new File("matrix1" + ".out"));
+            in = new Scanner(new FileInputStream(new File("matrix" + ".in")));
             solve();
-            out.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -37,14 +35,16 @@ public class Iteration_Jacobi {
             }
         }
 
+        double[][] transposeM = Common_methods.transpose(matrix);
+        matrix = Common_methods.mulMatrices(transposeM, matrix);
         double[] b = new double[n];
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
         }
-
+        b = Common_methods.mul(transposeM, b);
         double[] x = new double[n];
         for (int i = 0; i < n; i++) {
-            x[i] = in.nextDouble();
+            x[i] = (new Random()).nextDouble();
         }
 
         double[] tempX = new double[n];
@@ -75,19 +75,5 @@ public class Iteration_Jacobi {
 
         } while (norm > EPS);
 
-    }
-
-    double matrix_norm(double[][] matrix) {
-        double max = -1e+10;
-        for (double[] aMatrix : matrix) {
-            double temp = 0;
-            for (double anAMatrix : aMatrix) {
-                temp += Math.abs(anAMatrix);
-            }
-            if (temp > max) {
-                max = temp;
-            }
-        }
-        return max;
     }
 }
