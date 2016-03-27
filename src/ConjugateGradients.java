@@ -15,12 +15,12 @@ public class ConjugateGradients {
     Scanner in;
 
     public static void main(String[] args) {
-        new ConjugateGradients().run();
+        new ConjugateGradients().run(new File("matrix.in"));
     }
 
-    public void run() {
+    public void run(File file) {
         try {
-            in = new Scanner(new FileInputStream(new File("matrix" + ".in")));
+            in = new Scanner(new FileInputStream(file));
             solve();
         } catch (Exception e) {
         }
