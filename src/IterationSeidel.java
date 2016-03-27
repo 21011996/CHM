@@ -12,12 +12,12 @@ public class IterationSeidel {
     private Scanner in;
 
     public static void main(String[] args) {
-        new IterationSeidel().run();
+        new IterationSeidel().run(new File("matrix1.in"));
     }
 
-    private void run() {
+    public void run(File file) {
         try {
-            in = new Scanner(new FileInputStream(new File("matrix1" + ".in")));
+            in = new Scanner(new FileInputStream(file));
             solve();
         } catch (Exception e) {
             System.out.println(e.getMessage());

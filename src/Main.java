@@ -8,6 +8,7 @@ public class Main {
 
     void run(File file) {
         new IterationJacobi().run(file);
+        new IterationSeidel().run(file);
         new ConjugateGradients().run(file);
     }
 }
