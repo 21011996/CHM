@@ -60,6 +60,9 @@ public class Iteration_Jacobi {
                 }
             }
         }
+        if (Common_methods.matrix_norm(matrixB) < 1) {
+            System.out.println("ok");
+        }
         do {
             System.out.println(iter + ": " + Arrays.toString(x));
             iter++;
