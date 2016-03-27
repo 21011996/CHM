@@ -12,7 +12,7 @@ public class IterationJacobi {
     private Scanner in;
 
     public static void main(String[] args) {
-        new IterationJacobi().run(new File("matrix.in"));
+        new IterationJacobi().run(new File("matrix1.in"));
     }
 
     public void run(File file) {
@@ -66,4 +66,5 @@ public class IterationJacobi {
 
         System.out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
     }
+
 }
