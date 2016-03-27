@@ -12,7 +12,7 @@ public class IterationJacobi {
     private Scanner in;
 
     public static void main(String[] args) {
-        new IterationJacobi().run(new File("matrix.in"));
+        new IterationJacobi().run(new File("matrix1.in"));
     }
 
     public void run(File file) {
@@ -48,9 +48,9 @@ public class IterationJacobi {
 
         int iter = 0;
         double[][] matrixB = new double[n][n];
-        double[] bB = new double[n];
+        double[] c = new double[n];
         for (int i = 0; i < n; i++) {
-            bB[i] = b[i] / matrix[i][i];
+            c[i] = b[i] / matrix[i][i];
             for (int j = 0; j < n; j++) {
                 matrixB[i][j] = -matrix[i][j] / matrix[i][i];
 
@@ -65,7 +65,7 @@ public class IterationJacobi {
         do {
             iter++;
 
-            tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), bB);
+            tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), c);
 
             norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
             x = tempX;
