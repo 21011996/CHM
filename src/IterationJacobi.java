@@ -8,11 +8,12 @@ import java.util.Scanner;
  * Created by Ilya239 on 27.03.2016.
  */
 public class IterationJacobi {
+    final double EPS = 1e-10;
+    private Scanner in;
+
     public static void main(String[] args) {
         new IterationJacobi().run();
     }
-
-    private Scanner in;
 
     private void run() {
         try {
@@ -22,8 +23,6 @@ public class IterationJacobi {
             System.out.println(e.getMessage());
         }
     }
-
-    private double EPS = 1e-10;
 
     private void solve() {
         int n = in.nextInt();

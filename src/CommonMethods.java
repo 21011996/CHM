@@ -29,7 +29,7 @@ public class CommonMethods {
 
 
     public static double[] mul(double[][] matrix, double[] vec) {
-        int n  = vec.length;
+        int n = vec.length;
         double[] res = new double[n];
         for (int i = 0; i < n; i++) {
             res[i] = scalarMulVecVec(matrix[i], vec);
@@ -110,9 +110,9 @@ public class CommonMethods {
 
     public static double matrixNormEuclidean(double[][] matrix) {
         double sum = 0;
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix.length; j++) {
-                sum += matrix[i][j] * matrix[i][j];
+        for (double[] aMatrix : matrix) {
+            for (double anAMatrix : aMatrix) {
+                sum += anAMatrix * anAMatrix;
             }
         }
         return Math.sqrt(sum);
