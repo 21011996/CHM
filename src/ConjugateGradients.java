@@ -52,7 +52,7 @@ public class ConjugateGradients {
 
         int iter = 0;
         System.out.println(iter + ": " + Arrays.toString(x));
-        while (alpha > EPS) {
+        while (Math.abs(alpha) > EPS) {
             x = CommonMethods.sum(x, CommonMethods.scalarMulVecSc(alpha, dir));
             double[] grad = CommonMethods.sub(CommonMethods.mul(matrix, x), b);
 
