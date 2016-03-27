@@ -1,7 +1,7 @@
 /**
  * Created by dasha on 3/27/16.
  */
-public class Common_methods {
+public class CommonMethods {
     public static double[] negate(double[] vec) {
         double[] res = new double[vec.length];
         for (int i = 0; i < vec.length; i++) {
