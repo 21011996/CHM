@@ -25,6 +25,7 @@ public class IterationSeidel {
     }
 
     private void solve() {
+        System.out.println("Seidel's method of simple iterations:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -61,6 +62,9 @@ public class IterationSeidel {
         double tempX[];
         double norm;
 
+        if (CommonMethods.matrixNormEuclidean(matrixB1) + CommonMethods.matrixNormEuclidean(matrixB2) > 1) {
+            System.err.println("||B1|| + ||B2|| > 1, Seidel's Method may not converge.");
+        }
         do {
             System.out.println(iteration + ": " + Arrays.toString(x));
             iteration++;
@@ -71,7 +75,6 @@ public class IterationSeidel {
                     tempX[i] += matrixB1[i][j] * tempX[j];
                 }
             }
-
 
             norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
             x = tempX;
