@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -8,9 +7,9 @@ import java.util.Scanner;
 /**
  * Created by Ilya239 on 27.03.2016.
  */
-public class Iteration_Jacobi {
+public class IterationJacobi {
     public static void main(String[] args) {
-        new Iteration_Jacobi().run();
+        new IterationJacobi().run();
     }
 
     private Scanner in;
@@ -38,8 +37,8 @@ public class Iteration_Jacobi {
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
         }
-        b = Common_methods.adjustFree(matrix, b);
-        matrix = Common_methods.symmetrizeMatrix(matrix);
+        b = CommonMethods.adjustFree(matrix, b);
+        matrix = CommonMethods.symmetrizeMatrix(matrix);
 
         double[] x = new double[n];
         for (int i = 0; i < n; i++) {
@@ -60,16 +59,15 @@ public class Iteration_Jacobi {
                 }
             }
         }
-        if (Common_methods.matrix_norm(matrixB) < 1) {
-            System.out.println("ok");
-        }
+        System.out.println(CommonMethods.matrixNormEuclidean(matrixB));
         do {
             System.out.println(iter + ": " + Arrays.toString(x));
             iter++;
 
-            tempX = Common_methods.sum(Common_methods.mul(matrixB, x), bB);
+            tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), bB);
 
-            norm = Common_methods.vectorNorm(Common_methods.sub(x, tempX));
+            norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
+
 
             /*for (int i = 0; i < n; i++) {
                 if (Math.abs(x[i] - tempX[i]) > norm)

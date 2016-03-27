@@ -1,7 +1,7 @@
 /**
  * Created by dasha on 3/27/16.
  */
-public class Common_methods {
+public class CommonMethods {
     public static double[] negate(double[] vec) {
         double[] res = new double[vec.length];
         for (int i = 0; i < vec.length; i++) {
@@ -94,7 +94,7 @@ public class Common_methods {
         return res;
     }
 
-    public static double matrix_norm(double[][] matrix) {
+    public static double matrixNormInf(double[][] matrix) {
         double max = -1e+10;
         for (double[] aMatrix : matrix) {
             double temp = 0;
@@ -106,5 +106,15 @@ public class Common_methods {
             }
         }
         return max;
+    }
+
+    public static double matrixNormEuclidean(double[][] matrix) {
+        double sum = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                sum += matrix[i][j] * matrix[i][j];
+            }
+        }
+        return Math.sqrt(sum);
     }
 }

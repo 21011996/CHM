@@ -6,9 +6,9 @@ import java.util.*;
  * Created by dasha on 3/27/16.
  */
 
-public class Conjugate_gradients {
+public class ConjugateGradients {
     public static void main(String[] args) {
-        new Conjugate_gradients().run();
+        new ConjugateGradients().run();
     }
 
     Scanner in;
@@ -36,8 +36,8 @@ public class Conjugate_gradients {
             b[i] = in.nextDouble();
         }
 
-        b = Common_methods.adjustFree(matrix, b);
-        matrix = Common_methods.symmetrizeMatrix(matrix);
+        b = CommonMethods.adjustFree(matrix, b);
+        matrix = CommonMethods.symmetrizeMatrix(matrix);
 
         for (int i = 0; i < n; i++) {
             System.out.println(Arrays.toString(matrix[i]));
@@ -47,21 +47,21 @@ public class Conjugate_gradients {
         for (int i = 0; i < n; i++) {
             x[i] = (new Random()).nextDouble();
         }
-        double[] dir = Common_methods.normalizeVector(Common_methods.sub(b, Common_methods.mul(matrix, x)));
-        double alpha = -Common_methods.scalarMulVecVec(Common_methods.negate(dir), dir) / Common_methods.scalarMulVecVec(Common_methods.mul(matrix, dir), dir);
+        double[] dir = CommonMethods.normalizeVector(CommonMethods.sub(b, CommonMethods.mul(matrix, x)));
+        double alpha = -CommonMethods.scalarMulVecVec(CommonMethods.negate(dir), dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
 
         int iter = 0;
         while (alpha > EPS) {
             System.out.println(iter + ": " + Arrays.toString(x));
             System.out.println(Arrays.toString(dir) + "\n" + alpha);
 
-            x = Common_methods.sum(x, Common_methods.scalarMulVecSc(alpha, dir));
-            double[] grad = Common_methods.sub(Common_methods.mul(matrix, x), b);
+            x = CommonMethods.sum(x, CommonMethods.scalarMulVecSc(alpha, dir));
+            double[] grad = CommonMethods.sub(CommonMethods.mul(matrix, x), b);
 
-            double beta = Common_methods.scalarMulVecVec(Common_methods.mul(matrix, dir), grad) / Common_methods.scalarMulVecVec(Common_methods.mul(matrix, dir), dir);
+            double beta = CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), grad) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
 
-            dir = Common_methods.normalizeVector(Common_methods.sub(Common_methods.scalarMulVecSc(beta, dir), grad));
-            alpha = -Common_methods.scalarMulVecVec(grad, dir) / Common_methods.scalarMulVecVec(Common_methods.mul(matrix, dir), dir);
+            dir = CommonMethods.normalizeVector(CommonMethods.sub(CommonMethods.scalarMulVecSc(beta, dir), grad));
+            alpha = -CommonMethods.scalarMulVecVec(grad, dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
             iter++;
         }
 
