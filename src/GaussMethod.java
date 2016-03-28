@@ -34,6 +34,7 @@ public class GaussMethod {
     }
 
     public void solve() {
+        out.println("Gaussian elimination:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
