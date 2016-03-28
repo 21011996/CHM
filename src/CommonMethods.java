@@ -2,6 +2,8 @@
  * Created by dasha on 3/27/16.
  */
 public class CommonMethods {
+    private CommonMethods() {}
+
     public static double[][] calculateB(double[][] matrix) {
         int n = matrix.length;
         double[][] matrixB = new double[n][n];
@@ -71,12 +73,12 @@ public class CommonMethods {
         return sub(vec1, negate(vec2));
     }
 
-    public static double vectorNorm(double[] vec) {
+    public static double vectorNormEuclidean(double[] vec) {
         return Math.sqrt(scalarMulVecVec(vec, vec));
     }
 
     public static double[] normalizeVector(double[] vec) {
-        return scalarMulVecSc(1 / vectorNorm(vec), vec);
+        return scalarMulVecSc(1 / vectorNormEuclidean(vec), vec);
     }
 
 
@@ -99,6 +101,23 @@ public class CommonMethods {
         return mul(transpose(matrix), vec);
     }
 
+    public static double[][] getTopTriangle(double[][] matrix) {
+        int n = matrix.length;
+        double[][] res = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            System.arraycopy(matrix[i], i + 1, res[i], i + 1, n - (i + 1));
+        }
+        return res;
+    }
+
+    public static double[][] getBottomTriangle(double[][] matrix) {
+        int n = matrix.length;
+        double[][] res = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            System.arraycopy(matrix[i], 0, res[i], 0, i);
+        }
+        return res;
+    }
 
     public static double[][] mulMatrices(double[][] matrix1, double[][] matrix2) {
         int n = matrix1.length;
@@ -111,6 +130,14 @@ public class CommonMethods {
                 }
                 res[i][j] = scalarMulVecVec(matrix1[i], aux);
             }
+        }
+        return res;
+    }
+
+    public static double vectorNormInf(double[] vec) {
+        double res = Double.MIN_VALUE;
+        for (int i = 0; i < vec.length; i++) {
+            res = Math.max(res, vec[i]);
         }
         return res;
     }

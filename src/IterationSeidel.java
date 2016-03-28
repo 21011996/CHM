@@ -47,18 +47,8 @@ public class IterationSeidel {
 
         double[][] matrixB = CommonMethods.calculateB(matrix);
         double[] c = CommonMethods.calculateC(matrix, b);
-        double[][] matrixB1 = new double[n][n];
-        double[][] matrixB2 = new double[n][n];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i > j) {
-                    matrixB1[i][j] = matrixB[i][j];
-                } else {
-                    matrixB2[i][j] = matrixB[i][j];
-                }
-            }
-        }
+        double[][] matrixB1 = CommonMethods.getBottomTriangle(matrixB);
+        double[][] matrixB2 = CommonMethods.getTopTriangle(matrixB);
 
         int iteration = 0;
         double tempX[];
@@ -78,7 +68,7 @@ public class IterationSeidel {
                 }
             }
 
-            norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
+            norm = CommonMethods.vectorNormEuclidean(CommonMethods.sub(x, tempX));
             x = tempX;
         } while (norm > EPS);
 
