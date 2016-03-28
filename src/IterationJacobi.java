@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.*;
 
@@ -69,7 +68,7 @@ public class IterationJacobi {
 
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), c);
 
-            norm = CommonMethods.vectorNorm(CommonMethods.sub(x, tempX));
+            norm = CommonMethods.vectorNormEuclidean(CommonMethods.sub(x, tempX));
             x = tempX;
         } while (norm > EPS);
 

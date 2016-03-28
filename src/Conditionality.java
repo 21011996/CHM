@@ -11,6 +11,7 @@ public class Conditionality {
     PrintStream out;
 
     public void solve() throws IOException {
+        out.println("Conditional Number:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
 
@@ -20,17 +21,29 @@ public class Conditionality {
             }
         }
 
+        double[][] matrixCopy = new double[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrixCopy[i][j] = matrix[i][j];
+            }
+        }
+
         double inverseMatrix[][] = invert(matrix);
 
-        /*for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n;j ++) {
-                out.print(inverseMatrix[i][j] + " ");
+        /*double[][] mul = CommonMethods.mulMatrices(matrixCopy, inverseMatrix);
+
+        //E
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                out.print(mul[i][j]);
             }
             out.println();
-        }*/
+        }
+        out.println();*/
 
-        //out.println(CommonMethods.matrixNormEuclidean(matrix) * CommonMethods.matrixNormEuclidean(inverseMatrix));
-        out.println(CommonMethods.matrixNormInf(matrix) * CommonMethods.matrixNormInf(inverseMatrix));
+        //out.println(CommonMethods.matrixNormEuclidean(matrixCopy) * CommonMethods.matrixNormEuclidean(inverseMatrix));
+        out.println(CommonMethods.matrixNormInf(matrixCopy) * CommonMethods.matrixNormInf(inverseMatrix) + "\n");
     }
 
     public double[][] invert(double matrix[][]) {
