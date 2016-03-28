@@ -12,22 +12,30 @@ import java.util.Scanner;
 public class IterationSeidel {
     final double EPS = 1e-10;
     private Scanner in;
+    PrintStream out;
 
     public static void main(String[] args) {
-        new IterationSeidel().run(new File("randomTest.in"));
+        new IterationSeidel().run(new File("randomTest.in"), null);
     }
 
-    public void run(File file) {
+    public void run(File file, PrintStream out) {
+        if (out == null) {
+            this.out = System.out;
+        } else {
+            this.out = out;
+        }
         try {
+            Locale format = new Locale("US");
+            Locale.setDefault(format);
             in = new Scanner(new FileInputStream(file));
             solve();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
     private void solve() {
-        System.out.println("Seidel's method of simple iterations:");
+        out.println("Seidel's method of simple iterations:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -68,7 +76,7 @@ public class IterationSeidel {
             System.err.println("||B1|| + ||B2|| > 1, Seidel's Method may not converge.");
         }
         do {
-            System.out.println(iteration + ": " + Arrays.toString(x));
+            out.println(iteration + ": " + Arrays.toString(x));
             iteration++;
 
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB2, x), c);
@@ -82,7 +90,7 @@ public class IterationSeidel {
             x = tempX;
         } while (norm > EPS);
 
-        System.out.println(iteration + ": " + Arrays.toString(x) + " <- ans\n");
+        out.println(iteration + ": " + Arrays.toString(x) + " <- ans\n");
 
 
     }

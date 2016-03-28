@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
  */
 public class Conditionality {
     private Scanner in;
+    PrintStream out;
 
     public void solve() throws IOException {
         int n = in.nextInt();
@@ -29,7 +30,7 @@ public class Conditionality {
         }*/
 
         //out.println(CommonMethods.matrixNormEuclidean(matrix) * CommonMethods.matrixNormEuclidean(inverseMatrix));
-        System.out.println(CommonMethods.matrixNormInf(matrix) * CommonMethods.matrixNormInf(inverseMatrix));
+        out.println(CommonMethods.matrixNormInf(matrix) * CommonMethods.matrixNormInf(inverseMatrix));
     }
 
     public double[][] invert(double matrix[][]) {
@@ -105,12 +106,19 @@ public class Conditionality {
         return identityMatrix;
     }
 
-    public void run(File file) {
+    public void run(File file, PrintStream out) {
+        if (out == null) {
+            this.out = System.out;
+        } else {
+            this.out = out;
+        }
         try {
+            Locale format = new Locale("US");
+            Locale.setDefault(format);
             in = new Scanner(new FileInputStream(file));
             solve();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
