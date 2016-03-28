@@ -11,6 +11,8 @@ public class TestGenerator {
     static PrintStream out;
 
     public static void main(String[] args) {
+        Locale format = new Locale("US");
+        Locale.setDefault(format);
         int n = 50;
         try {
             out = new PrintStream(new File("randomTest.in"));
