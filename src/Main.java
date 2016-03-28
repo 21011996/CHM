@@ -10,10 +10,10 @@ public class Main {
 
     void run(File file, PrintStream out) {
         TestGenerator.main(null);
+        new Conditionality().run(file, out);
         new GaussMethod().run(file, out);
         new IterationJacobi().run(file, out);
         new IterationSeidel().run(file, out);
         new ConjugateGradients().run(file, out);
-        new Conditionality().run(file, out);
     }
 }
