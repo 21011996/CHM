@@ -15,29 +15,22 @@ import java.util.Scanner;
 public class ConjugateGradients {
     final double EPS = 1e-12;
     Scanner in;
-    PrintStream out;
 
     public static void main(String[] args) {
-        new ConjugateGradients().run(new File("randomTest.in"), null);
+        new ConjugateGradients().run(new File("randomTest.in"));
     }
 
-    public void run(File file, PrintStream out) {
-        if (out == null) {
-            this.out = System.out;
-        } else {
-            this.out = out;
-        }
+    public void run(File file) {
         try {
-            Locale format = new Locale("US");
-            Locale.setDefault(format);
             in = new Scanner(new FileInputStream(file));
             solve();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void solve() {
-        out.println("Conjugate gradient method:");
+        System.out.println("Conjugate gradient method:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -61,7 +54,7 @@ public class ConjugateGradients {
         double alpha = -CommonMethods.scalarMulVecVec(CommonMethods.negate(dir), dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
 
         int iter = 0;
-        out.println(iter + ": " + Arrays.toString(x));
+        System.out.println(iter + ": " + Arrays.toString(x));
         while (Math.abs(alpha) > EPS) {
             x = CommonMethods.sum(x, CommonMethods.scalarMulVecSc(alpha, dir));
             double[] grad = CommonMethods.sub(CommonMethods.mul(matrix, x), b);
@@ -71,9 +64,9 @@ public class ConjugateGradients {
             dir = CommonMethods.normalizeVector(CommonMethods.sub(CommonMethods.scalarMulVecSc(beta, dir), grad));
             alpha = -CommonMethods.scalarMulVecVec(grad, dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
             iter++;
-            out.println(iter + ": " + Arrays.toString(x));
+            System.out.println(iter + ": " + Arrays.toString(x));
         }
 
-        out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
+        System.out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
     }
 }

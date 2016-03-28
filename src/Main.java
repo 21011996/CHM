@@ -5,14 +5,15 @@ import java.io.PrintStream;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-        new Main().run(new File("randomTest.in"), new PrintStream("output.txt"));
+        new Main().run(new File("randomTest.in"));
     }
 
-    void run(File file, PrintStream out) {
+    void run(File file) {
         TestGenerator.main(null);
-        new IterationJacobi().run(file, out);
-        new IterationSeidel().run(file, out);
-        new ConjugateGradients().run(file, out);
-        new Conditionality().run(file, out);
+        new GaussMethod().run(file);
+        new IterationJacobi().run(file);
+        new IterationSeidel().run(file);
+        new ConjugateGradients().run(file);
+        new Conditionality().run(file);
     }
 }
