@@ -13,5 +13,6 @@ public class Main {
         new IterationJacobi().run(file, out);
         new IterationSeidel().run(file, out);
         new ConjugateGradients().run(file, out);
+        new Conditionality().run(file, out);
     }
 }
