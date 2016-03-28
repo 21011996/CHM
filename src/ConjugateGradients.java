@@ -2,7 +2,9 @@ import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,15 +13,23 @@ import java.util.Scanner;
  */
 
 public class ConjugateGradients {
-    final double EPS = 1e-15;
+    final double EPS = 1e-12;
     Scanner in;
+    PrintStream out;
 
     public static void main(String[] args) {
-        new ConjugateGradients().run(new File("matrix.in"));
+        new ConjugateGradients().run(new File("randomTest.in"), null);
     }
 
-    public void run(File file) {
+    public void run(File file, PrintStream out) {
+        if (out == null) {
+            this.out = System.out;
+        } else {
+            this.out = out;
+        }
         try {
+            Locale format = new Locale("US");
+            Locale.setDefault(format);
             in = new Scanner(new FileInputStream(file));
             solve();
         } catch (Exception e) {
@@ -27,7 +37,7 @@ public class ConjugateGradients {
     }
 
     public void solve() {
-        System.out.println("Conjugate gradient method:");
+        out.println("Conjugate gradient method:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -51,7 +61,7 @@ public class ConjugateGradients {
         double alpha = -CommonMethods.scalarMulVecVec(CommonMethods.negate(dir), dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
 
         int iter = 0;
-        System.out.println(iter + ": " + Arrays.toString(x));
+        out.println(iter + ": " + Arrays.toString(x));
         while (Math.abs(alpha) > EPS) {
             x = CommonMethods.sum(x, CommonMethods.scalarMulVecSc(alpha, dir));
             double[] grad = CommonMethods.sub(CommonMethods.mul(matrix, x), b);
@@ -61,9 +71,9 @@ public class ConjugateGradients {
             dir = CommonMethods.normalizeVector(CommonMethods.sub(CommonMethods.scalarMulVecSc(beta, dir), grad));
             alpha = -CommonMethods.scalarMulVecVec(grad, dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
             iter++;
-            System.out.println(iter + ": " + Arrays.toString(x));
+            out.println(iter + ": " + Arrays.toString(x));
         }
 
-        System.out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
+        out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
     }
 }
