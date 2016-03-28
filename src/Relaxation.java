@@ -1,18 +1,33 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by heat_wave on 29/03/16.
  */
 public class Relaxation {
     final double EPS = 1e-15;
-    final double OMEGA = 0.8d;
-    FastScanner in;
+    final double OMEGA = 0.7d;
+    Scanner in;
+    PrintStream out;
 
     public static void main(String[] args) {
-        new Relaxation().run();
+        new Relaxation().run(new File("randomTest.in"), null);
+    }
+
+    public void run(File file, PrintStream out) {
+        if (out == null) {
+            this.out = System.out;
+        } else {
+            this.out = out;
+        }
+        try {
+            Locale format = new Locale("US");
+            Locale.setDefault(format);
+            in = new Scanner(new FileInputStream(file));
+            solve();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void solve() {
@@ -52,8 +67,12 @@ public class Relaxation {
             iteration++;
 
             for (int i = 0; i < n; i++) {
-                tempX[i] = CommonMethods.scalarMulVecVec(matrixB2[i], tempX) +
-                        CommonMethods.scalarMulVecVec(matrixB1[i], x) + c[i];
+                for (int j = 0; j < i; j++) {
+                    tempX[i] += matrixB1[i][j] * tempX[j];
+                }
+                for (int j = i + 1; j < n; j++) {
+                    tempX[i] += matrixB2[i][j] * x[j];
+                }
             }
             tempX = CommonMethods.sum(CommonMethods.scalarMulVecSc(OMEGA, tempX),
                     CommonMethods.scalarMulVecSc(1 - OMEGA, x));
@@ -61,46 +80,6 @@ public class Relaxation {
             norm = CommonMethods.vectorNormInf(CommonMethods.sub(x, tempX));
             x = tempX;
         } while (norm > EPS);
-    }
-
-    public void run() {
-        in = new FastScanner(new File("goodMatrix.in"));
-        solve();
-    }
-
-    class FastScanner {
-        BufferedReader br;
-        StringTokenizer st;
-
-        FastScanner(File f) {
-            try {
-                br = new BufferedReader(new FileReader(f));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-
-        String next() {
-            while (st == null || !st.hasMoreTokens()) {
-                try {
-                    st = new StringTokenizer(br.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return st.nextToken();
-        }
-
-        int nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        double nextDouble() {
-            return Double.parseDouble(next());
-        }
-
-        long nextLong() {
-            return Long.parseLong(next());
-        }
+        System.out.println(iteration + ": " + Arrays.toString(x) + " <- ans\n");
     }
 }
