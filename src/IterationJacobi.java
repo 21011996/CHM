@@ -13,30 +13,22 @@ import java.util.Scanner;
 public class IterationJacobi {
     final double EPS = 1e-10;
     private Scanner in;
-    PrintStream out;
 
     public static void main(String[] args) {
-        new IterationJacobi().run(new File("randomTest.in"), null);
+        new IterationJacobi().run(new File("randomTest.in"));
     }
 
-    public void run(File file, PrintStream out) {
-        if (out == null) {
-            this.out = System.out;
-        } else {
-            this.out = out;
-        }
+    public void run(File file) {
         try {
-            Locale format = new Locale("US");
-            Locale.setDefault(format);
             in = new Scanner(new FileInputStream(file));
             solve();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
     private void solve() {
-        out.println("Jacobi's method of simple iterations:");
+        System.out.println("Jacobi's method of simple iterations:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -65,7 +57,7 @@ public class IterationJacobi {
             System.err.println("||B|| > 1. Jacobi's Method may not converge.\n");
         }
         do {
-            out.println(iter + ": " + Arrays.toString(x));
+            System.out.println(iter + ": " + Arrays.toString(x));
             iter++;
 
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), c);
@@ -74,7 +66,7 @@ public class IterationJacobi {
             x = tempX;
         } while (norm > EPS);
 
-        out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
+        System.out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
     }
 
 }

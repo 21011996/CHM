@@ -9,23 +9,14 @@ import java.util.Scanner;
  * Created by shambala on 28/03/16.
  */
 public class GaussMethod {
-    final double EPS = 1e-12;
     Scanner in;
-    PrintStream out;
 
     public static void main(String[] args) {
-        new GaussMethod().run(new File("badMatrix.in"), null);
+        new GaussMethod().run(new File("badMatrix.in"));
     }
 
-    public void run(File file, PrintStream out) {
-        if (out == null) {
-            this.out = System.out;
-        } else {
-            this.out = out;
-        }
+    public void run(File file) {
         try {
-            Locale format = new Locale("US");
-            Locale.setDefault(format);
             in = new Scanner(new FileInputStream(file));
             solve();
         } catch (Exception e) {
@@ -34,7 +25,7 @@ public class GaussMethod {
     }
 
     public void solve() {
-        out.println("Gaussian elimination:");
+        System.out.println("Gaussian elimination:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -87,7 +78,7 @@ public class GaussMethod {
                 ans[i] -= matrix[i][j]*ans[j];
             }
         }
-        out.println("Answer: " + Arrays.toString(ans));
+        System.out.println("Answer: " + Arrays.toString(ans));
 
     }
 }
