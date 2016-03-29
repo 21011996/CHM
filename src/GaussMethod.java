@@ -56,6 +56,10 @@ public class GaussMethod {
                     maxRow = j;
                 }
             }
+            if (absMax == 0) {
+                out.println("Error in Gaussian elimination");
+                return;
+            }
             if (i != maxRow) {
                 double[] tmp = matrix[i];
                 matrix[i] = matrix[maxRow];
