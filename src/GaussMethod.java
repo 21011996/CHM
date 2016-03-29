@@ -91,7 +91,7 @@ public class GaussMethod {
                 ans[i] -= matrix[i][j]*ans[j];
             }
         }
-        out.println("Answer: " + Arrays.toString(ans));
+        out.println("Answer: " + Arrays.toString(ans) + "\n");
 
     }
 }

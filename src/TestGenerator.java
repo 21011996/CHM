@@ -1,5 +1,7 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Random;
@@ -10,10 +12,10 @@ import java.util.Random;
 public class TestGenerator {
     static PrintStream out;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Locale format = new Locale("US");
         Locale.setDefault(format);
-        int n = 50;
+        int n = 10;
         try {
             out = new PrintStream(new File("randomTest.in"));
         } catch (Exception e) {
@@ -45,5 +47,7 @@ public class TestGenerator {
         for (int i = 0; i < n; i++) {
             out.print(b[i] + " ");
         }
+
+        out.close();
     }
 }

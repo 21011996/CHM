@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 
 public class ConjugateGradients {
-    final double EPS = 1e-12;
+    final double EPS = 1e-10;
     Scanner in;
     PrintStream out;
 
@@ -46,6 +46,8 @@ public class ConjugateGradients {
             }
         }
 
+        boolean broken = false;
+
         double[] b = new double[n];
         for (int i = 0; i < n; i++) {
             b[i] = in.nextDouble();
@@ -61,7 +63,6 @@ public class ConjugateGradients {
         double alpha = -CommonMethods.scalarMulVecVec(CommonMethods.negate(dir), dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
 
         int iter = 0;
-        out.println(iter + ": " + Arrays.toString(x));
         while (Math.abs(alpha) > EPS) {
             x = CommonMethods.sum(x, CommonMethods.scalarMulVecSc(alpha, dir));
             double[] grad = CommonMethods.sub(CommonMethods.mul(matrix, x), b);
@@ -71,9 +72,15 @@ public class ConjugateGradients {
             dir = CommonMethods.normalizeVector(CommonMethods.sub(CommonMethods.scalarMulVecSc(beta, dir), grad));
             alpha = -CommonMethods.scalarMulVecVec(grad, dir) / CommonMethods.scalarMulVecVec(CommonMethods.mul(matrix, dir), dir);
             iter++;
-            out.println(iter + ": " + Arrays.toString(x));
+            if (iter == 10000) {
+                broken = true;
+                break;
+            }
         }
 
+        if (broken) {
+            out.println("Didn't converge");
+        }
         out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
     }
 }

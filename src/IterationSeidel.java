@@ -58,15 +58,24 @@ public class IterationSeidel {
         double[][] matrixB1 = CommonMethods.getBottomTriangle(matrixB);
         double[][] matrixB2 = CommonMethods.getTopTriangle(matrixB);
 
+
+        double normB = CommonMethods.matrixNormEuclidean(matrixB);
+        double normB1 = CommonMethods.matrixNormEuclidean(matrixB1);
+        double normB2 = CommonMethods.matrixNormEuclidean(matrixB2);
+        double lim = EPS;
+        if (1 - normB1 < EPS) {
+            lim *= (1 - normB1) / normB;
+        }
+
         int iteration = 0;
         double tempX[];
         double norm;
 
-        if (CommonMethods.matrixNormEuclidean(matrixB1) + CommonMethods.matrixNormEuclidean(matrixB2) > 1) {
+        boolean broken = false;
+        if (normB1 + normB2 > 1) {
             System.err.println("||B1|| + ||B2|| > 1, Seidel's Method may not converge.");
         }
         do {
-            out.println(iteration + ": " + Arrays.toString(x));
             iteration++;
 
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB2, x), c);
@@ -79,10 +88,14 @@ public class IterationSeidel {
             norm = CommonMethods.vectorNormEuclidean(CommonMethods.sub(x, tempX));
             x = tempX;
             if (iteration == 10000) {
+                broken = true;
                 break;
             }
-        } while (norm > EPS);
+        } while (norm > lim);
 
+        if (broken) {
+            out.println("Didn't converge");
+        }
         out.println(iteration + ": " + Arrays.toString(x) + " <- ans\n");
 
 

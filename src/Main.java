@@ -8,7 +8,7 @@ public class Main {
         new Main().run(new File("goodMatrix.in"), new PrintStream("output.txt"));
     }
 
-    void run(File file, PrintStream out) {
+    void run(File file, PrintStream out) throws FileNotFoundException {
         TestGenerator.main(null);
         new Conditionality().run(file, out);
         new GaussMethod().run(file, out);
@@ -16,5 +16,6 @@ public class Main {
         new IterationSeidel().run(file, out);
         new Relaxation().run(file, out);
         new ConjugateGradients().run(file, out);
+        out.close();
     }
 }

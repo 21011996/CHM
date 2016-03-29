@@ -32,9 +32,7 @@ public class IterationJacobi {
     }
 
     private void solve() {
-        ArrayList<String> output = new ArrayList<>();
-        output.add("Jacobi's method of simple iterations:");
-        //out.println("Jacobi's method of simple iterations:");
+        out.println("Jacobi's method of simple iterations:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -54,28 +52,38 @@ public class IterationJacobi {
 
         double[] tempX;
         double norm;
+        boolean broken = false;
 
         int iter = 0;
         double[][] matrixB = CommonMethods.calculateB(matrix);
         double[] c = CommonMethods.calculateC(matrix, b);
+        double normB = CommonMethods.matrixNormEuclidean(matrixB);
+        double lim = EPS;
+        if (1 - normB < EPS) {
+            lim *= (1 - normB) / normB;
+        }
 
-        if (CommonMethods.matrixNormEuclidean(matrixB) > 1) {
-            System.err.println("||B|| > 1. Jacobi's Method may not converge.\n");
+        if (normB > 1) {
+            System.err.println("||B|| > 1. Jacobi's Method may not converge.");
         }
         do {
-            output.add(iter + ": " + Arrays.toString(x));
             iter++;
 
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), c);
 
             norm = CommonMethods.vectorNormEuclidean(CommonMethods.sub(x, tempX));
             x = tempX;
-        } while (norm > EPS);
+            if (iter == 10000) {
+                broken = true;
+                break;
+            }
+        } while (norm > lim);
 
-        output.add(iter + ": " + Arrays.toString(x) + " <- ans\n");
-        for (String s : output) {
-            out.println(s);
+        if (broken) {
+            out.println("Didn't converge");
         }
+        out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
+
     }
 
 }

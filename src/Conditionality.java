@@ -44,6 +44,7 @@ public class Conditionality {
 
         //out.println(CommonMethods.matrixNormEuclidean(matrixCopy) * CommonMethods.matrixNormEuclidean(inverseMatrix));
         out.println(CommonMethods.matrixNormInf(matrixCopy) * CommonMethods.matrixNormInf(inverseMatrix) + "\n");
+        System.out.println(CommonMethods.matrixNormInf(matrixCopy) * CommonMethods.matrixNormInf(inverseMatrix) + "\n");
     }
 
     public double[][] invert(double matrix[][]) {
