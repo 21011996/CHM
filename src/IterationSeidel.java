@@ -78,6 +78,9 @@ public class IterationSeidel {
 
             norm = CommonMethods.vectorNormEuclidean(CommonMethods.sub(x, tempX));
             x = tempX;
+            if (iteration == 10000) {
+                break;
+            }
         } while (norm > EPS);
 
         out.println(iteration + ": " + Arrays.toString(x) + " <- ans\n");
