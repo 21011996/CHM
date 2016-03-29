@@ -1,10 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Ilya239 on 27.03.2016.
@@ -35,7 +32,9 @@ public class IterationJacobi {
     }
 
     private void solve() {
-        out.println("Jacobi's method of simple iterations:");
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Jacobi's method of simple iterations:");
+        //out.println("Jacobi's method of simple iterations:");
         int n = in.nextInt();
         double[][] matrix = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -64,7 +63,7 @@ public class IterationJacobi {
             System.err.println("||B|| > 1. Jacobi's Method may not converge.\n");
         }
         do {
-            out.println(iter + ": " + Arrays.toString(x));
+            output.add(iter + ": " + Arrays.toString(x));
             iter++;
 
             tempX = CommonMethods.sum(CommonMethods.mul(matrixB, x), c);
@@ -73,7 +72,10 @@ public class IterationJacobi {
             x = tempX;
         } while (norm > EPS);
 
-        out.println(iter + ": " + Arrays.toString(x) + " <- ans\n");
+        output.add(iter + ": " + Arrays.toString(x) + " <- ans\n");
+        for (String s : output) {
+            out.println(s);
+        }
     }
 
 }

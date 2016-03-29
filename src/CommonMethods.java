@@ -135,9 +135,9 @@ public class CommonMethods {
     }
 
     public static double vectorNormInf(double[] vec) {
-        double res = Double.MIN_VALUE;
+        double res = 0;
         for (int i = 0; i < vec.length; i++) {
-            res = Math.max(res, vec[i]);
+            res = Math.max(res, Math.abs(vec[i]));
         }
         return res;
     }
