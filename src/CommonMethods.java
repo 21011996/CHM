@@ -165,4 +165,14 @@ public class CommonMethods {
         }
         return Math.sqrt(sum);
     }
+
+    public static boolean checkNanOrInf(double[] vec) {
+        for (double aVec : vec) {
+            if (Double.isNaN(aVec) || Double.isInfinite(aVec)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 }

@@ -91,7 +91,7 @@ public class Relaxation {
                 break;
             }
         } while (norm > lim);
-        if (broken) {
+        if (broken || CommonMethods.checkNanOrInf(x)) {
             out.println("Didn't converge");
         }
 
